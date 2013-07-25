@@ -2,11 +2,16 @@ var express = require('express');
 var app = express();
 app.use(express.logger());
 
-app.get('/', function(request, response) {
-<<<<<<< HEAD
-  response.send(fs.readFileSync('index.html'));
-=======
-  response.send('Hello World 2!');
+function readContent(callback) {
+    fs.readFile("./Index.html", function (err, content) {
+        if (err) return callback(err)
+        callback(null, content)
+    });
+}
+
+readContent(function (err, content) {
+    console.log(content)
+});
 >>>>>>> d4f0a83979ebb03b15d8a66f1ce9e863ea5efeec
 });
 
