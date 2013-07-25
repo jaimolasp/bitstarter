@@ -1,18 +1,16 @@
-var express = require('express');
-var app = express();
-app.use(express.logger());
+var http = require('http'),
+    fs = require('fs');
 
-function readContent(callback) {
-    fs.readFile("./Index.html", function (err, content) {
-        if (err) return callback(err)
-        callback(null, content)
-    });
-}
 
-readContent(function (err, content) {
-    console.log(content)
-});
->>>>>>> d4f0a83979ebb03b15d8a66f1ce9e863ea5efeec
+fs.readFile('./index.html', function (err, html) {
+    if (err) {
+        throw err; 
+    }       
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(8000);
 });
 
 var port = process.env.PORT || 5000;
